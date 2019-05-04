@@ -12,4 +12,4 @@ server.listen(port, function() {
     console.log(`BACKEND executando na porta ${port}.`)
 })
 
-// module.exports = server
+module.exports = server
