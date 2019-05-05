@@ -18,13 +18,26 @@ export default class Todo extends Component {
         this.handleAdd = this.handleAdd.bind(this)
         //bind para trazer as props a partir do todoForm
         this.handleChange = this.handleChange.bind(this)
+        this.handleRemove = this.handleRemove.bind(this)
+
+        this.refresh()
+
+    }
+
+    refresh(){
+        axios.get(`${URL}?sort=-createdAt`)
+            .then(resp => this.setState({...this.state, description: '', list: resp.data}))
+        
+        //carrega os objetos da lista e exibe no console
+        // axios.get(`${URL}?sort=-createdAt`)
+        //     .then(resp => console.log(resp.data))
     }
 
     //Para lidar com Adicionar
     handleAdd(){
         const description = this.state.description
         axios.post(URL, {description})
-            .then(resp => console.log('Funcionou!'))
+            .then(resp => this.refresh())
 
         console.log(this.state.description)
     }
@@ -37,6 +50,13 @@ export default class Todo extends Component {
         
     }
 
+    //Para lidar com a remoção de item
+    handleRemove(todo){
+        axios.delete(`${URL}/${todo._id}`)
+            .then(resp => this.refresh())
+        // console.log("remove item:",todo)
+    }
+
     render(){
         return(
             <div>
@@ -45,7 +65,10 @@ export default class Todo extends Component {
                 <TodoForm description={this.state.description}
                     handleChange={this.handleChange}
                     handleAdd={this.handleAdd}/>
-                <TodoList/>
+
+                {/* list é passada através de props para o todoList */}
+                <TodoList list={this.state.list}
+                    handleRemove={this.handleRemove}/>
             </div>
         )
     }
