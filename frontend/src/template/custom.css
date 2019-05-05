@@ -1,0 +1,21 @@
+/* altera o visual dos botões
+        Lembrete:
+        Este CSS precisa ser importado no app.jsx para ser encontrado pelo webpack 
+*/
+
+.btn {
+    margin-right: 5px;
+}
+
+.markedAsDone {
+    text-decoration: line-through;
+    color: #777;
+}
+
+.tableActions {
+    width: 105px;
+}
+
+.todoForm {
+    padding-bottom: 60px;
+}
