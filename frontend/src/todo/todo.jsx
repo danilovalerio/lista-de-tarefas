@@ -19,7 +19,8 @@ export default class Todo extends Component {
         //bind para trazer as props a partir do todoForm
         this.handleChange = this.handleChange.bind(this)
         this.handleRemove = this.handleRemove.bind(this)
-
+        this.handleMarkAsDone = this.handleMarkAsDone.bind(this)
+        this.handleMarkAsPending = this.handleMarkAsPending.bind(this)
         this.refresh()
 
     }
@@ -57,6 +58,21 @@ export default class Todo extends Component {
         // console.log("remove item:",todo)
     }
 
+    //Para lidar com o item concluído
+    handleMarkAsDone(todo){
+        axios.put(`${URL}/${todo._id}`, { ...todo, done: true})
+            .then(resp => this.refresh())
+        // console.log("marca item feito:",todo)
+    }
+
+    //Para lidar com o item retornando para pendente
+    handleMarkAsPending(todo){
+        axios.put(`${URL}/${todo._id}`, { ...todo, done: false})
+            .then(resp => this.refresh())
+        // console.log("marca item não feito:",todo)
+    }
+
+
     render(){
         return(
             <div>
@@ -68,7 +84,9 @@ export default class Todo extends Component {
 
                 {/* list é passada através de props para o todoList */}
                 <TodoList list={this.state.list}
-                    handleRemove={this.handleRemove}/>
+                    handleRemove={this.handleRemove}
+                    handleMarkAsDone={this.handleMarkAsDone}
+                    handleMarkAsPending={this.handleMarkAsPending}/>
             </div>
         )
     }
