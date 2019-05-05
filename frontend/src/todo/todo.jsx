@@ -19,19 +19,29 @@ export default class Todo extends Component {
         //bind para trazer as props a partir do todoForm
         this.handleChange = this.handleChange.bind(this)
         this.handleRemove = this.handleRemove.bind(this)
+        this.handleSearch = this.handleSearch.bind(this)
+        
         this.handleMarkAsDone = this.handleMarkAsDone.bind(this)
         this.handleMarkAsPending = this.handleMarkAsPending.bind(this)
+        
         this.refresh()
 
     }
 
-    refresh(){
-        axios.get(`${URL}?sort=-createdAt`)
-            .then(resp => this.setState({...this.state, description: '', list: resp.data}))
+    refresh(description = ''){
+        //se contém uma descrição ele adiciona ao filtro, caso contrário consulta todos
+        const search = description ? `&description__regex=/${description}/` : ''
+        axios.get(`${URL}?sort=-createdAt${search}`)
+            .then(resp => this.setState({...this.state, description, list: resp.data}))
         
         //carrega os objetos da lista e exibe no console
         // axios.get(`${URL}?sort=-createdAt`)
         //     .then(resp => console.log(resp.data))
+    }
+
+    //Lidar com a busca de itens
+    handleSearch(){
+        this.refresh(this.state.description)
     }
 
     //Para lidar com Adicionar
@@ -40,7 +50,7 @@ export default class Todo extends Component {
         axios.post(URL, {description})
             .then(resp => this.refresh())
 
-        console.log(this.state.description)
+        // console.log(this.state.description)
     }
 
     //Para lidar com o evento de alteração do input
@@ -54,21 +64,21 @@ export default class Todo extends Component {
     //Para lidar com a remoção de item
     handleRemove(todo){
         axios.delete(`${URL}/${todo._id}`)
-            .then(resp => this.refresh())
+            .then(resp => this.refresh(this.state.description))
         // console.log("remove item:",todo)
     }
 
     //Para lidar com o item concluído
     handleMarkAsDone(todo){
         axios.put(`${URL}/${todo._id}`, { ...todo, done: true})
-            .then(resp => this.refresh())
+            .then(resp => this.refresh(this.state.description))
         // console.log("marca item feito:",todo)
     }
 
     //Para lidar com o item retornando para pendente
     handleMarkAsPending(todo){
         axios.put(`${URL}/${todo._id}`, { ...todo, done: false})
-            .then(resp => this.refresh())
+            .then(resp => this.refresh(this.state.description))
         // console.log("marca item não feito:",todo)
     }
 
@@ -80,7 +90,8 @@ export default class Todo extends Component {
                 {/* a props handleAdd está recebendo o valor de todoForm */}
                 <TodoForm description={this.state.description}
                     handleChange={this.handleChange}
-                    handleAdd={this.handleAdd}/>
+                    handleAdd={this.handleAdd}
+                    handleSearch = {this.handleSearch}/>
 
                 {/* list é passada através de props para o todoList */}
                 <TodoList list={this.state.list}
