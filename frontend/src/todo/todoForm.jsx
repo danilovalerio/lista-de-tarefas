@@ -1,7 +1,16 @@
 import React from 'react'
 
 export default props => (
-    <di>
-        <h1>Form</h1>
-    </di>
+    <div role='form' className='todoForm'>
+        <div className='col-xs-12 col-sm-9 col-md-10'>
+            <input id='desciption' className='form-contol'
+                placeholder='Adicione uma tarefa'></input>
+        </div>
+
+        <div className='col-xs-12 col-sm-3 col-md-2'>
+            <button className='btn btn-primary'>
+                <i className='fa fa-plus'></i>
+            </button>
+        </div>
+    </div>
 )
