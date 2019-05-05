@@ -23,6 +23,7 @@ export default class Todo extends Component {
         
         this.handleMarkAsDone = this.handleMarkAsDone.bind(this)
         this.handleMarkAsPending = this.handleMarkAsPending.bind(this)
+        this.handleClear = this.handleClear.bind(this)
         
         this.refresh()
 
@@ -82,6 +83,11 @@ export default class Todo extends Component {
         // console.log("marca item não feito:",todo)
     }
 
+    //Para limpar a busca dos itens
+    handleClear(){
+        this.refresh()
+    }
+
 
     render(){
         return(
@@ -91,7 +97,8 @@ export default class Todo extends Component {
                 <TodoForm description={this.state.description}
                     handleChange={this.handleChange}
                     handleAdd={this.handleAdd}
-                    handleSearch = {this.handleSearch}/>
+                    handleSearch = {this.handleSearch}
+                    handleClear = {this.handleClear}/>
 
                 {/* list é passada através de props para o todoList */}
                 <TodoList list={this.state.list}

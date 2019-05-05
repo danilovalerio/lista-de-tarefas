@@ -12,10 +12,12 @@
     color: #777;
 }
 
+/* espaçamento para caber 2 botões de ações */
 .tableActions {
     width: 105px;
 }
 
+/* espaçamento entre campo input e tabela */
 .todoForm {
     padding-bottom: 60px;
 }
