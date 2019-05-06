@@ -17,8 +17,8 @@ export default props => {
 
     return (
             <div role='form' className='todoForm'>
-                <Grid cols='12 9 10'>
-                    <input id='desciption' className='form-contol'
+                <Grid cols='10 9 10'>
+                    <input id='desciption' className='form-control'
                         placeholder='Adicione uma tarefa'
                         onChange={props.handleChange}
                         onKeyUp={keyHandler}

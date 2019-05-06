@@ -36,7 +36,7 @@ export default props => {
 
 
     return(
-        <table>
+        <table className='table'>
             <thead>
                 <tr>
                     <th>Descrição</th>
